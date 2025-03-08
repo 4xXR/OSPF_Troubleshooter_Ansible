@@ -1,0 +1,26 @@
+- name: Assign IP addresses to interfaces
+  hosts: routers
+  gather_facts: false
+  tasks:
+
+    - name: Enter privileged EXEC mode
+      ansible.builtin.debug:
+        msg: "Entering privileged mode on {{ inventory_hostname }}"
+
+    - name: Check if the interface already has the IP configured
+      cisco.ios.ios_command:
+        commands:
+          - "show ip interface brief"
+      register: interface_status
+
+    - name: Configure interfaces only if they do not have IP assigned
+      cisco.ios.ios_config:
+        parents:
+          - "interface {{ item.interface }}"
+        lines:
+          - "ip address {{ item.ip }} 255.255.255.0"
+          - "no shutdown"
+        match: line
+      loop: "{{ interfaces }}"
+      when: "item.ip is not in interface_status.stdout[0]"
+      become: true

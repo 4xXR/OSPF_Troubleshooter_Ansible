@@ -1,0 +1,6 @@
+*.log
+*.backup
+*.retry
+ansible_env/
+.vscode/
+ssh_conection.txt

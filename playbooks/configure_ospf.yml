@@ -1,0 +1,26 @@
+- name: Configure OSPF on routers
+  hosts: routers
+  gather_facts: false
+  tasks:
+
+    - name: Enter privileged EXEC mode
+      ansible.builtin.debug:
+        msg: "Entering privileged mode on {{ inventory_hostname }}"
+
+    - name: Enable OSPF and define router ID
+      cisco.ios.ios_config:
+        parents:
+          - "router ospf 1"
+        lines:
+          - "router-id {{ ansible_host }}"
+
+    - name: Configure OSPF networks
+      cisco.ios.ios_config:
+        lines:
+          - "network 10.0.12.0 0.0.0.255 area 0"
+          - "network 10.0.13.0 0.0.0.255 area 0"
+          - "network 10.0.23.0 0.0.0.255 area 0"
+          - "network 10.1.24.0 0.0.0.255 area 1"
+          - "network 10.1.46.0 0.0.0.255 area 1"
+          - "network 10.2.35.0 0.0.0.255 area 2"
+          - "network 10.2.57.0 0.0.0.255 area 2"

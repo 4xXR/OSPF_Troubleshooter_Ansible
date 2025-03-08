@@ -1,0 +1,8 @@
+- name: Save configuration on all routers
+  hosts: routers
+  gather_facts: false
+  tasks:
+    - name: Save running-config to startup-config
+      cisco.ios.ios_command:
+        commands:
+          - "write memory"

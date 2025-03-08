@@ -1,0 +1,16 @@
+- name: Check interface configuration on routers
+  hosts: routers
+  gather_facts: false
+  tasks:
+
+    - name: Get interfaces interface_status
+      cisco.ios.ios_command:
+        commands:
+          - "show ip interface brief"
+      register: interfaces_status
+      ignore_errors: true
+
+    - name: Show result of interfaces
+      ansible.builtin.debug:
+        var: interface_status.stdout_lines
+      when: interface_status is defined and interface_status.stdout_lines is defined

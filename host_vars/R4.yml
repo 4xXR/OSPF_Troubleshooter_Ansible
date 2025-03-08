@@ -1,0 +1,6 @@
+ansible_user: admin4
+ansible_password: pass4
+interfaces:
+  - { interface: "FastEthernet0/0", ip: "10.1.46.4" }
+  - { interface: "Serial2/0", ip: "10.1.24.4" }
+  - { interface: "Loopback0", ip: "4.4.4.4" }

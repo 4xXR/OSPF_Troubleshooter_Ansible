@@ -1,0 +1,5 @@
+ansible_user: admin7
+ansible_password: pass7
+interfaces:
+  - { interface: "FastEthernet0/0", ip: "10.2.57.7" }
+  - { interface: "Loopback0", ip: "7.7.7.7" }

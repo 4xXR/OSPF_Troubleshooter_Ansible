@@ -1,0 +1,11 @@
+- name: Debug IP Configuration
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Mostrar comandos que se aplicarían
+      ansible.builtin.debug:
+        msg:
+          - "interface {{ item.interface }}"
+          - "ip address {{ item.ip }} 255.255.255.0"
+          - "no shutdown"
+      loop: "{{ interfaces }}"
